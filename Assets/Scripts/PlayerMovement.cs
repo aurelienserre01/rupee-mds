@@ -7,11 +7,16 @@ public class PlayerMovement : MonoBehaviour
 {
     private Vector2 _movement;
     private Rigidbody2D _rigidbody2D;
+    private Animator _animator;
     public float speed = 10f;
+    
+    
+    
     private void Awake()
     {
         Debug.Log("Awake");
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
     
     // Start is called before the first frame update
@@ -30,8 +35,9 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         _movement = new Vector2(horizontal, vertical).normalized;
-        Debug.Log(_movement);
-
+        _animator.SetFloat("Horizontal", horizontal);
+        _animator.SetFloat("Vertical", vertical);
+        _animator.SetFloat("Speed",_movement.sqrMagnitude);
     }
 
     private void FixedUpdate()
